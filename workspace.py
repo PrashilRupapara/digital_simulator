@@ -17,9 +17,7 @@ class Workspace:
 		# if the gate is input gate the add input_gate.output_to gates in the next_turn_of set
 		if isinstance(gate, IN):
 			self.next_turn_of.update(gate.output_to)
-			
-			# TODO: add the name of input gates to the output gates if IN
-		
+					
 		return 0
 
 	def simulate(self):

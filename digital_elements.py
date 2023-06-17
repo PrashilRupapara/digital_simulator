@@ -5,7 +5,7 @@ class Gate(ABC):
 	def __init__(self, name, workspace, output_to) -> None:
 		# setting the instance variables
 		self.__name = name # updates: case of name duplicates is not handled
-		self.input_pins = [] # updates: case of name duplicates is not handled
+		self.input_pins = set()
 		self.output_to = output_to
 		self.gateName_output_dictionary = workspace.gateName_output_dictionary
 		self.gates = workspace.gates
@@ -28,7 +28,7 @@ class Gate(ABC):
 	def update_input_pins_of_successor_gate(self):
 		# adding self.name to the output_to gates as input_pins
 		for gate_name in self.output_to:
-			self.gates[gate_name].input_pins.append(self.name)
+			self.gates[gate_name].input_pins.add(self.name)
 
 	def update_gateName_output_dictionary(self, ans):
 		# setting output for new gate and updating the output for existing gate both case are handled
@@ -94,7 +94,7 @@ class NOT(Gate):
 	
 	def execute(self):
 		if len(self.input_pins)==1:
-			ans = not self.gateName_output_dictionary[self.input_pins[0]]
+			ans = not self.gateName_output_dictionary[list(self.input_pins)[0]]
 
 			self.update_input_pins_of_successor_gate()
 			self.update_gateName_output_dictionary(ans)
@@ -107,11 +107,11 @@ class NOT(Gate):
 class IN(Gate):
 	def __init__(self, name, workspace, output_to) -> None:
 		super().__init__(name, workspace, output_to)
-		self.input_pins = []  # for input gate input values will be given as input_pins
+		# for input gate input values will be given as input_pins
 	
 	def execute(self):
 		if len(self.input_pins)==1:
-			ans = self.input_pins[0]
+			ans = list(self.input_pins)[0]
 
 			self.update_input_pins_of_successor_gate()
 			self.update_gateName_output_dictionary(ans)
@@ -128,7 +128,7 @@ class OUT(Gate):
 
 	def execute(self, wspace):
 		if len(self.input_pins)==1:
-			ans = self.gateName_output_dictionary[self.input_pins[0]]
+			ans = self.gateName_output_dictionary[list(self.input_pins)[0]]
 
 			# adding gate name and output value to the output_gates_with_output_dictionary of the workspace
 			wspace.OUT_gates_with_output_dictionary[self.name] = ans
@@ -145,7 +145,7 @@ if __name__=='__main__':
 
 	or_gate1 = Gate.make_instance_of('OR', ['G1', workspace1, []])
 	or_gate2 = OR('G2', workspace1, ['G1', 'G3'])
-	# or_gate2.input_pins.append('G1')
-	# or_gate2.input_pins.append('G3')
+	# or_gate2.input_pins.add('G1')
+	# or_gate2.input_pins.add('G3')
 	
 	pass

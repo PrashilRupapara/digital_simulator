@@ -9,4 +9,4 @@ class DictOfValidOutput(dict):
 			value = int(value)
 			super().__setitem__(key, value)
 		else:
-			raise ValueError('Only these values are allowed as output of the gate: ', valid_outputs)
+			raise ValueError(f'''Only '1' and '0' are allowed as output of the gate''')

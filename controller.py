@@ -56,7 +56,7 @@ class Controller:
 
                 # adding read value from the stimuli file to the input_pins of the IN gate(not as name of input gate but as input value)
                 in_gate_instance = self.workspace.gates[gate_name]
-                in_gate_instance.input_pins.append(gate_output)
+                in_gate_instance.input_pins.add(gate_output)
                 in_gate_instance.execute()
                 ind+=2
 
