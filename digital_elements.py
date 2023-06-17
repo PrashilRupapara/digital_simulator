@@ -53,7 +53,6 @@ class Gate(ABC):
 		# Create an instance using the string name
 		var = globals()
 		var_list = param_list
-		var_list = print(*param_list)
 		instance = var[string_classname](*param_list)
 		return instance
 		# instance = print(type(globals()[string_classname]))
@@ -132,7 +131,7 @@ class OUT(Gate):
 			ans = self.gateName_output_dictionary[self.input_pins[0]]
 
 			# adding gate name and output value to the output_gates_with_output_dictionary of the workspace
-			wspace.output_gates_with_output_dictionary[self.name] = ans
+			wspace.OUT_gates_with_output_dictionary[self.name] = ans
 			
 			return ans
 		else:

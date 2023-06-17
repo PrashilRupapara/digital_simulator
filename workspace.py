@@ -1,13 +1,14 @@
 from data_structures import DictOfValidOutput
 from digital_elements import IN, OUT
 
+
 class Workspace:
 	def __init__(self) -> None:
 		# setting the instance variables
 		self.gates = {}  # dictionary of name and whole object of gate
 		self.gateName_output_dictionary = DictOfValidOutput()
 		self.next_turn_of = set()  # set of gates which are instance of IN class and while execution list of gates to which the output of the next_turn_of gates will be fed
-		self.output_gates_with_output_dictionary = {}
+		self.OUT_gates_with_output_dictionary = {}
 	
 	def add_gate(self, gate):
 		# adding gate to the dictionary of gates
@@ -18,6 +19,8 @@ class Workspace:
 			self.next_turn_of.update(gate.output_to)
 			
 			# TODO: add the name of input gates to the output gates if IN
+		
+		return 0
 
 	def simulate(self):
 		continue_ = True
@@ -39,10 +42,11 @@ class Workspace:
 			for gate_name in self.next_turn_of.copy():
 				gate_obj = self.gates[gate_name]
 				if isinstance(gate_obj, OUT):
-					gate_obj.execute(self) # OUT gate will be executed and output value will be stored in the output_gates_with_output_dictionary of workspace
+					gate_obj.execute(self) # OUT gate will be executed and output value will be stored in the OUT_gates_with_output_dictionary of workspace
 					self.next_turn_of.remove(gate_name)
 					
 
 			# termination condition - if length of the self.next_turn_of list is 0 then simulation will not continue
 			if len(self.next_turn_of)==0:
 				continue_ = False
+		return 0
